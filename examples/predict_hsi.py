@@ -105,7 +105,9 @@ def main(load=False):
     sample_container = create_sample_container(feature_container)
     model = create_model()
     agent = create_agent(model, opt)
-    print(sample_container['dataloader_test'].dataset[0])
+    print(sample_container['dataloader_test'].dataset[0][:])
+    print(sample_container['dataloader_test'].dataset[1][:])
+    print(sample_container['dataloader_test'].dataset.size())
     predict = agent.predict(sample_container['dataloader_test'])
     print(predict)
 
