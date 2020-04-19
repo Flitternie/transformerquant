@@ -23,7 +23,7 @@ def create_feature_container(dropna=False):
             open_yf = torch.tensor(data['Open'].values, dtype=torch.float32)
             high_yf = torch.tensor(data['High'].values, dtype=torch.float32)
             low_yf = torch.tensor(data['Low'].values, dtype=torch.float32)
-            close_yf =torch.tensor(data['Close'].values, dtype=torch.float32) 
+            close_yf = torch.tensor(data['Close'].values, dtype=torch.float32) 
             volume_yf = torch.tensor(data['Volume'].values, dtype=torch.float32)
             #pdb.set_trace()
             output = featurizer.forward(open_yf,high_yf,low_yf,close_yf,volume_yf)
@@ -33,7 +33,7 @@ def create_feature_container(dropna=False):
             output_np = np.asarray(output_np_list).transpose(1,0)
             feature_df = pd.DataFrame(output_np, index=data['datetime'])
         except Exception as e:
-            print("{} fialed".format(order_book_id))
+            print("{} failed".format(order_book_id))
         else:
             print("{} successfully".format(order_book_id))
             if dropna:

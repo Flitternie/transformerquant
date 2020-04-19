@@ -212,16 +212,15 @@ class Agent(object):
             feature_ts = dataset.to(self.device)
             to_evaluate = False
         elif isinstance(dataset, torch.utils.data.Dataset):
-            feature_ts = dataset.feature_ts.to(self.device)
-            target_ts = dataset.target_ts
+            feature_ts = dataset.tensors[0].to(self.device)
+            target_ts = dataset.tensors[1]
             dataset = torch.utils.data.DataLoader(dataset, batch_size=len(dataset), shuffle=False)
         elif isinstance(dataset, torch.utils.data.DataLoader):
             feature_ts = dataset.dataset.tensors[0].to(self.device)
             target_ts = dataset.dataset.tensors[1].to(self.device)
+            to_evaluate = False
         else:
             raise KeyError("input must be torch.utils.data.Dataset or DataLoader")
-        print(dataset.dataset.tensors[0].size())
-        print(dataset.dataset.tensors[1].size())
 
         y_pred = self.model(feature_ts)
 

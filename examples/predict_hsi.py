@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import torch
 import yfinance as yf
+import matplotlib.pyplot as plt
 from transformerquant.featurizers.default_featurizer import DefaultFeaturizer
 from transformerquant.dataset.sampler import Sampler
 from transformerquant.trainer.agent import Agent
@@ -105,9 +106,17 @@ def main(load=False):
     sample_container = create_sample_container(feature_container)
     model = create_model()
     agent = create_agent(model, opt)
-    predict = agent.predict(sample_container['dataloader_test'])
-    print(predict)
-
+    target = sample_container['dataloader_test'].dataset.tensors[1].numpy()
+    predict = agent.predict(sample_container['dataloader_test']).numpy()
+    # print(predict)
+    assert (len(target) == len(predict))
+    plt.plot(target, label='target')
+    plt.plot(predict, label='predict')
+    plt.title("Plot")
+    plt.xlabel("Days")
+    plt.ylabel("Return Rate")
+    plt.legend()
+    plt.savefig('result.png')
 
 if __name__ == "__main__":
     main()
