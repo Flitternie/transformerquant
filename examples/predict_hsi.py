@@ -107,7 +107,7 @@ def main(load=False):
     agent = create_agent(model, opt)
     predict = agent.predict(sample_container['dataloader_test'])
     print(predict)
-    return state
+    
 
 if __name__ == "__main__":
     main()
