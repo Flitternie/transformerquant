@@ -208,20 +208,20 @@ class Agent(object):
     def predict(self, dataset, to_evaluate=True):
         self.model.eval()
 
-        if isinstance(dataset, torch.Tensor):
-            feature_ts = dataset.to(self.device)
-            to_evaluate = False
-        elif isinstance(dataset, torch.utils.data.Dataset):
-            feature_ts = dataset.feature_ts.to(self.device)
-            target_ts = dataset.target_ts
-            dataset = torch.utils.data.DataLoader(dataset, batch_size=len(dataset), shuffle=False)
-        elif isinstance(dataset, torch.utils.data.DataLoader):
-            feature_ts = dataset.dataset.x_sample_test_np.to(self.device)
-            target_ts = dataset.dataset.y_sample_test
-        else:
-            raise KeyError("input must be torch.utils.data.Dataset or DataLoader")
+        # if isinstance(dataset, torch.Tensor):
+        #     feature_ts = dataset.to(self.device)
+        #     to_evaluate = False
+        # elif isinstance(dataset, torch.utils.data.Dataset):
+        #     feature_ts = dataset.feature_ts.to(self.device)
+        #     target_ts = dataset.target_ts
+        #     dataset = torch.utils.data.DataLoader(dataset, batch_size=len(dataset), shuffle=False)
+        # elif isinstance(dataset, torch.utils.data.DataLoader):
+        #     feature_ts = dataset.dataset.feature_ts.to(self.device)
+        #     target_ts = dataset.dataset.target_ts
+        # else:
+        #     raise KeyError("input must be torch.utils.data.Dataset or DataLoader")
 
-        y_pred = self.model(feature_ts)
+        # y_pred = self.model(feature_ts)
 
         if to_evaluate:
             evaluator = self._evaluator
@@ -237,7 +237,7 @@ class Agent(object):
                     print("Result on test dataset {}:{}".format(metric_name, value))
             state = evaluator.run(dataset, max_epochs=1)
 
-        return y_pred
+        # return y_pred
 
     def fit(self, loader_train, loader_val=None):
         # set the model in train mode
