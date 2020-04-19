@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+import argparse
 import numpy as np
 import pandas as pd
 import torch
@@ -70,37 +71,42 @@ def create_model():
     return model
 
 
-def create_agent(model):
+def create_agent(model, opt):
     use_cuda=True
     loss_func = torch.nn.MSELoss()
-    n_epochs = 300
     lr = 0.001
     early_stop_patience = 80
     #optimizer = torch.optim.Adam(model.parameters(), lr=lr)
     optimizer = torch.optim.RMSprop(model.parameters(), lr=lr)
     lr_scheduler = torch.optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.99)
     #optimizer = torch.optim.RMSprop(model.parameters(), lr=lr)
-    to_save_dir = "../model/"
-    checkpoint = None#"/media/allen/c54da21a-a3bc-4c5e-a36c-0a41b6108e59/quant/Quant_core/AI_Trader/asset/training_PositionModel_20180509_1814/model_PositionModel_282_val_loss=0.3601593.pth"
     #agent
     agent = Agent(model,
                   use_cuda=use_cuda,
                   loss_func=loss_func,
                   optimizer=optimizer,
                   lr_scheduler = lr_scheduler,
-                  n_epochs=n_epochs,
+                  n_epochs=opt.n_epochs,
                   early_stop_patience=early_stop_patience,
-                  to_save_dir=to_save_dir,
-                  checkpoint=checkpoint)
+                  to_save_dir=opt.to_save_dir,
+                  checkpoint=opt.checkpoint)
     return agent
 
 
 def main(load=False):
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-n_epochs', type=int, default=300)
+    parser.add_argument('-to_save_dir', default=None)
+    parser.add_argument('-checkpoint', default=None)
+
+    opt = parser.parse_args()
+
     feature_container = create_feature_container(dropna=True)
     sample_container = create_sample_container(feature_container)
     model = create_model()
-    agent = create_agent(model)
-    state = agent.fit(sample_container['dataloader_train'], sample_container['dataloader_val'])
+    agent = create_agent(model, opt)
+    predict = agent.predict(sample_container['dataloader_test'])
+    print(predict)
     return state
 
 if __name__ == "__main__":
