@@ -226,7 +226,7 @@ class Agent(object):
         if to_evaluate:
             evaluator = self._evaluator
             if evaluator is None:
-                self._logger.info("loading default evaluator in prophet")
+                logger.info("loading default evaluator in prophet")
                 evaluator = self.create_default_evaluator(dataset)
 
             @evaluator.on(Events.EPOCH_COMPLETED)
