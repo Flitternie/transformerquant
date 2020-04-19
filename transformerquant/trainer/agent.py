@@ -216,8 +216,9 @@ class Agent(object):
             target_ts = dataset.target_ts
             dataset = torch.utils.data.DataLoader(dataset, batch_size=len(dataset), shuffle=False)
         elif isinstance(dataset, torch.utils.data.DataLoader):
-            feature_ts = dataset.dataset[0].to(self.device)
-            target_ts = dataset.dataset[1]
+            print(dataset.dataset)
+            feature_ts = dataset.dataset[0].x_sample_test_np.to(self.device)
+            target_ts = dataset.dataset[1].y_sample_test
         else:
             raise KeyError("input must be torch.utils.data.Dataset or DataLoader")
 
