@@ -80,7 +80,7 @@ def create_agent(model):
     optimizer = torch.optim.RMSprop(model.parameters(), lr=lr)
     lr_scheduler = torch.optim.lr_scheduler.ExponentialLR(optimizer, gamma=0.99)
     #optimizer = torch.optim.RMSprop(model.parameters(), lr=lr)
-    to_save_dir = "/model/"
+    to_save_dir = "../model/"
     checkpoint = None#"/media/allen/c54da21a-a3bc-4c5e-a36c-0a41b6108e59/quant/Quant_core/AI_Trader/asset/training_PositionModel_20180509_1814/model_PositionModel_282_val_loss=0.3601593.pth"
     #agent
     agent = Agent(model,
