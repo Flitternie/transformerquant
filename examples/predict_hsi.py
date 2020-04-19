@@ -96,7 +96,7 @@ def create_agent(model, opt):
 def main(load=False):
     parser = argparse.ArgumentParser()
     parser.add_argument('-n_epochs', type=int, default=300)
-    parser.add_argument('-to_save_dir', default=None)
+    parser.add_argument('-to_save_dir', type=str, default=None)
     parser.add_argument('-checkpoint', type=str, default=None)
 
     opt = parser.parse_args()
