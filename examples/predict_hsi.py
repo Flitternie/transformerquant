@@ -97,7 +97,7 @@ def main(load=False):
     parser = argparse.ArgumentParser()
     parser.add_argument('-n_epochs', type=int, default=300)
     parser.add_argument('-to_save_dir', default=None)
-    parser.add_argument('-checkpoint', default=None)
+    parser.add_argument('-checkpoint', type=str, default=None)
 
     opt = parser.parse_args()
 
@@ -107,7 +107,7 @@ def main(load=False):
     agent = create_agent(model, opt)
     predict = agent.predict(sample_container['dataloader_test'])
     print(predict)
-    
+
 
 if __name__ == "__main__":
     main()
