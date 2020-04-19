@@ -18,7 +18,8 @@ def create_feature_container(dropna=False):
     for order_book_id in order_book_ids:
         try:
             print("process {}".format(order_book_id))
-            data = yf.download(order_book_id, start='2010-01-01', end='2020-01-01').reset_index()
+            data = yf.download(tickers=order_book_id, start='2010-01-01', end='2020-01-01').reset_index()
+            data['Date'] = data['Date'].astype(str)
             open_yf = torch.tensor(data['Open'].values, dtype=torch.float32)
             high_yf = torch.tensor(data['High'].values, dtype=torch.float32)
             low_yf = torch.tensor(data['Low'].values, dtype=torch.float32)
