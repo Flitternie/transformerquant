@@ -110,14 +110,16 @@ def main(load=False):
     predict = agent.predict(sample_container['dataloader_test']).detach().numpy()
     # print(predict)
     assert (len(target) == len(predict))
+    
     fig = plt.figure()
     fig.plot(target, color='r', label='target')
-    fig.plot(predict, color='b',label='predict')
+    fig.plot(predict, color='b', label='predict')
     fig.title("Plot")
     fig.xlabel("Days")
     fig.ylabel("Return Rate")
     fig.legend()
-    fig.savefig('result.png')
+    fig.savefig('./result.png')
+    plt.close(fig) 
 
 if __name__ == "__main__":
     main()
