@@ -220,7 +220,8 @@ class Agent(object):
             target_ts = dataset.dataset.tensors[1].to(self.device)
         else:
             raise KeyError("input must be torch.utils.data.Dataset or DataLoader")
-        print(dataset.dataset.tensors.size())
+        print(dataset.dataset.tensors[0].size())
+        print(dataset.dataset.tensors[1].size())
 
         y_pred = self.model(feature_ts)
 
