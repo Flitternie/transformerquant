@@ -107,7 +107,7 @@ def main(load=False):
     model = create_model()
     agent = create_agent(model, opt)
     target = sample_container['dataloader_test'].dataset.tensors[1].numpy()
-    predict = agent.predict(sample_container['dataloader_test']).numpy()
+    predict = agent.predict(sample_container['dataloader_test']).detach().numpy()
     # print(predict)
     assert (len(target) == len(predict))
     plt.plot(target, label='target')
